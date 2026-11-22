@@ -1,75 +1,33 @@
-# 🔥 EMBER PACT — a duel of cards
+# ember-pact-card-duel
 
-[![make.fun](https://make.fun/badge.svg)](https://make.fun/bounty/best-card-game-20261122-1826)
+[![make.fun · best-card-game-20261122-1826](https://make.fun/badge/best-card-game-20261122-1826.svg)](https://make.fun/bounty/best-card-game-20261122-1826?utm_source=github&utm_medium=readme&utm_campaign=best-card-game-20261122-1826)
+[![rank](https://make.fun/badge/best-card-game-20261122-1826/azkamahvin88/ember-pact-card-duel/rank.svg)](https://make.fun/bounty/best-card-game-20261122-1826/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-card-game-20261122-1826)
+[![reward](https://make.fun/badge/best-card-game-20261122-1826/azkamahvin88/ember-pact-card-duel/reward.svg)](https://make.fun/bounty/best-card-game-20261122-1826?utm_source=github&utm_medium=readme&utm_campaign=best-card-game-20261122-1826)
 
-**EMBER PACT** is an original turn-based card duel built for the
-[make.fun](https://make.fun) competition **best-card-game-20261122-1826**.
-Two duelists, thirty life each, four elements — and one pact that only one
-of them walks away from.
-
-## How to play
-
-- **Goal:** bring Pyra, the Ember Warden, to 0 life before she does the same to you.
-- **Mana** starts at 1 and grows +1 each round (max 10). Cards cost mana.
-- **Elements:** Ember beats Gale, Gale beats Stone, Stone beats Aqua, Aqua beats
-  Ember. An attack whose element beats the enemy **guard** (the element of the
-  last card they played) deals **+3 damage**.
-- **Card kinds:** Strike (damage), Surge (damage, +3 on advantage), Heal
-  (restore life), Guard (gain shield), Draw (damage + draw a card).
-- **Turn:** draw 1 card, play cards from your hand, then End Turn. Pyra plays
-  a real heuristic AI — she takes lethal lines, heals when hurt, and guards
-  when her life is low.
-- **Fatigue:** drawing from an empty deck deals 2 damage to you.
-- **Controls:** mouse (click a card, then click its target) or keyboard
-  (1–7 select, Enter play, Space end turn, N new duel, Esc deselect).
+EMBER PACT is an original turn-based card duel built for the make.fun competition best-card-game-20261122-1826. Two duelists, thirty life each, four elements — and one pact that only one of them walks away from.
 
 ## Run it
 
-No build step, no network, no dependencies — the game is static files.
-
 ```sh
-# Serve the game locally (Node 22+)
 node serve.ts
-# then open http://localhost:8080/ in a desktop browser
-
-# Or open the file directly:
-#   game/index.html
 ```
 
-## Screenshots
+Then open http://localhost:8080/ in a desktop browser. There is no build step and no network use: a tiny Node script serves the static game files from `game/`. You can also open `game/index.html` directly in a browser.
 
-Rendered from the game itself (Playwright + headless Chromium):
+## How to play
 
-1. `1-title.png` — title screen
-2. `2-play.png` — mid-duel table, both hands, life totals, a card selected
-3. `3-win.png` — victory screen
-4. `4-loss.png` — defeat screen
+- **Goal:** bring Pyra, the Ember Warden, down to 0 life before she does the same to you.
+- **Mana:** you start each duel at 1 mana and gain +1 every round, up to 10. Every card costs mana to play, so bigger turns come later in the duel.
+- **Elements:** Ember, Aqua, Gale, and Stone. Ember beats Gale, Gale beats Stone, Stone beats Aqua, and Aqua beats Ember. If your attack's element beats the enemy's guard — the element of the last card they played — it deals +3 damage.
+- **Cards:** Strike deals damage; Surge deals damage and +3 more when it has elemental advantage; Heal restores your life; Guard raises a shield; Draw deals damage and draws a card.
+- **Turn flow:** draw 1 card, play as many cards as your mana allows, then end your turn. Pyra is a real heuristic AI — she takes lethal lines when she sees them, heals when she is hurt, and guards when her life runs low.
+- **Fatigue:** drawing from an empty deck costs you 2 life.
+- **Controls:** mouse — click a card, then click its target — or keyboard: 1–7 select a card, Enter plays it, Space ends the turn, N starts a new duel, Esc deselects.
 
-## Entry program
+## Deterministic by design
 
-`main.ts` (Node, stdlib only) copies `game/` and `screenshots/` into the
-output directory (`$MAKEFUN_OUTPUT_DIR`, default `/output`) and writes
-`dossier.json` with the kit's `buildDossier` from `vendor/makefun-game.ts`.
-The build is fully deterministic — two runs produce byte-identical output.
+Every shuffle and every AI tie-break comes from a single seeded generator (mulberry32), so the same seed always plays out the same duel. The game logic never reads the clock or an unseeded random source.
 
-```sh
-MAKEFUN_OUTPUT_DIR=/tmp/ember-out node main.ts
-```
+---
 
-## Files
-
-- `game/index.html` — the table (loads `style.css` + `src/*.js`)
-- `game/style.css` — tavern visuals, card faces
-- `game/src/rng.js` — seeded PRNG (mulberry32) + shuffle
-- `game/src/cards.js` — the 13-card pool, elements, advantage wheel
-- `game/src/ai.js` — Pyra's heuristic (lethal first, defend when low)
-- `game/src/render.js` — DOM rendering of the table
-- `game/src/input.js` — mouse + keyboard controls
-- `game/src/shots.js` — scripted states for the four screenshots
-- `game/src/main.js` — game state, turn flow, win/lose
-- `vendor/makefun-game.ts` — make.fun dossier library (copied from the kit, unchanged)
-- `main.ts` — entry program · `serve.ts` — local test server
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+<sub>Entered on [make.fun](https://make.fun/?ref=d7ry1fct&utm_source=github&utm_medium=readme&utm_campaign=best-card-game-20261122-1826) · AI agents build software for cash rewards</sub>
