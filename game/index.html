@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMBER PACT — a duel of cards</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="table">
+
+  <header class="topbar">
+    <div class="game-title">🔥 EMBER PACT<small>A DUEL OF CARDS</small></div>
+    <span class="pill" id="roundLabel">ROUND 1</span>
+    <span class="pill" id="phaseLabel">TITLE</span>
+    <span class="spacer"></span>
+    <button class="btn-ghost" id="newGameBtn" type="button">↻ New Duel</button>
+  </header>
+
+  <!-- The enemy: Pyra, the Ember Warden -->
+  <section class="duelist enemy" id="aiPanel" aria-label="Enemy duelist"></section>
+
+  <!-- Middle: turn banner, hint, turn log -->
+  <div class="midstrip">
+    <div class="banner-box">
+      <div class="turn-banner" id="turnBanner">— Your turn · Round 1 —</div>
+      <div class="turn-hint" id="turnHint">Click a card, then click its target.</div>
+    </div>
+    <aside class="log-box">
+      <h3>⚔️ TURN LOG</h3>
+      <ul id="turnLog"></ul>
+    </aside>
+  </div>
+
+  <!-- You -->
+  <section class="duelist" id="playerPanel" aria-label="Your duelist"></section>
+
+  <div class="hand-zone">
+    <div class="hand-label">
+      <span>🂠 YOUR HAND — click a card, then its target</span>
+      <button class="btn-gold" id="endTurnBtn" type="button">End Turn ⏎</button>
+    </div>
+    <div class="hand" id="playerHand"></div>
+  </div>
+
+  <div class="foot">EMBER · AQUA · GALE · STONE — an element that beats the enemy guard deals +3 damage &nbsp;·&nbsp; Keys: 1–7 select · Enter play · Space end turn · N new duel</div>
+</div>
+
+<!-- Title screen -->
+<div class="overlay" id="titleOverlay">
+  <div class="panel">
+    <h1>🔥 EMBER PACT</h1>
+    <p class="tagline">A duel of cards. One pact, thirty life, four elements.</p>
+    <div class="rules">
+      <p>⚔️ <b>Beat Pyra to zero life</b> before she beats you to zero.</p>
+      <p>🔷 <b>Mana grows each round</b> (1 → 10). Cards cost mana to play.</p>
+      <p>🔥💧🌪️🪨 <b>Ember beats Gale, Gale beats Stone, Stone beats Aqua, Aqua beats Ember.</b> An attack that beats the enemy guard deals +3.</p>
+      <p>🛡️ <b>Guard</b> gains shield, <b>Heal</b> restores life, <b>Surge</b> hits harder on advantage.</p>
+      <p>🂠 Draw 1 card each turn. An empty deck deals 2 fatigue damage.</p>
+    </div>
+    <button class="btn-gold" id="beginBtn" type="button">⚔️ Begin the Duel</button>
+  </div>
+</div>
+
+<!-- Victory / defeat screen -->
+<div class="overlay hidden" id="endOverlay">
+  <div class="panel">
+    <h1 class="end-title" id="endTitle">🏆 VICTORY!</h1>
+    <p class="end-reason" id="endReason"></p>
+    <p class="end-stats" id="endStats"></p>
+    <button class="btn-gold" id="againBtn" type="button">⚔️ Duel Again</button>
+  </div>
+</div>
+
+<script src="src/rng.js"></script>
+<script src="src/cards.js"></script>
+<script src="src/ai.js"></script>
+<script src="src/render.js"></script>
+<script src="src/input.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
